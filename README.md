@@ -283,7 +283,7 @@ request
   "txCount": 1,    //此区块内所含交易数量
   "transactions": [
     {
-      "method": "Update APInfo FromDB",
+      "method": "Store spectrum usage info on blockchain",
       "txHash": "0xba42461b3d9890a6b78aa3268e55f9219a9f2ff602a27c7368c5fd2b5b2c5bce",
       "apAddr": "3632303030303039325f35353331323932393738",
       "apid": "620000092_55",
@@ -432,17 +432,17 @@ request
       "apAddr": "3632303030303039315f35353730303139373933"
     },
     {
-      "method": "Update database",
+      "method": "Update trading results to Coexistence manager",
       "txHash": "0xc6affdf7056142c359428caffa2b0a096c421ae0be6fa2d542b73f43ab14c887",
       "apAddr": "3632303030303039315f35353730303139373933"
     },
     {
-      "method": "Update database",
+      "method": "Update trading results to Coexistence manager",
       "txHash": "0x4b77fc37b48ed4111b225adf77c0b495b5d7816feab2219053c90292643718b5",
       "apAddr": "3632303030303039315f35353730303139373933"
     },
     {
-      "method": "Update database",
+      "method": "Update trading results to Coexistence manager",
       "txHash": "0x1764cb6d29884df9173127d0dd9677eca7560e30c976088c2b9d4d7296e5042b",
       "apAddr": "3632303030303039315f35353730303139373933"
     }
