@@ -255,7 +255,7 @@ request
 
 由于存在有四种类型的消息，因为result有四种json格式：
 
-**第一种：Update APInfo FromDB**
+**第一种：Store spectrum usage info on blockchain**
 
 返回值：
 
@@ -369,7 +369,7 @@ request
 }
 ```
 
-**第四种：Transaction Confirm**
+**第四种：Trading confirm**
 
 返回值：
 
@@ -394,7 +394,7 @@ request
   "txCount": 1,
   "transactions": [
     {
-      "method": "Transaction Confirm",
+      "method": "Trading confirm",
       "txHash": "0xcc5967d8ac0c18b9e7ab2d8f9bcd6a7b561c6ebd75f97aa334ce5c125bc43c36",
       "buyerAPaddr": "3632303030303039315f35353730303139373933",
       "buyerAPid": "620000091_55",
@@ -408,7 +408,7 @@ request
 }
 ```
 
-**第五种：Update database**
+**第五种：Update trading results to Coexistence manager**
 
 返回值：
 
@@ -427,7 +427,7 @@ request
   "txCount": 4,
   "transactions": [
     {
-      "method": "Update database",
+      "method": "Update trading results to Coexistence manager",
       "txHash": "0x65fbea22466c3a3d8b0fadfb5cc0c6dae419345350cf10a00a6c29871c708d8e",
       "apAddr": "3632303030303039315f35353730303139373933"
     },

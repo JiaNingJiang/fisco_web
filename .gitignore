@@ -18,3 +18,4 @@ yarn-error.log*
 package-lock.json
 v0.*.js
 v0.*.js.gz
+dist.zip
