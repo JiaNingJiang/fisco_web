@@ -178,7 +178,7 @@ export default {
         pleaseEnterContractAddress: "Please type in contract address"
     },
     placeholder: {
-        globalSearch: 'Search by Block Number / Tx Hash',
+        globalSearch: 'Search by Block Number',
         javaPackage: 'Example: com.webank',
         selected: 'select',
         selectedAccountAddress: 'Select Account Address',
