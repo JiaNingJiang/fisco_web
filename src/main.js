@@ -17,6 +17,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import login from './views/login/login'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
@@ -61,6 +62,90 @@ promise.polyfill();
 Vue.prototype.getCookie = getCookie;
 Vue.prototype.setCookie = setCookie;
 Vue.prototype.delCookie = delCookie;
+
+
+
+//对拥有方进行转换
+Vue.filter('ownerChange', (value) => {
+  switch (value) {
+    case "00":
+      return "银行";
+    case "11":
+      return "保理";
+    default:
+      return value
+  }
+}),
+
+//对供应商证件类型进行转换
+Vue.filter('certificateTypeChange', (value) => {
+  switch(value)
+  {
+      case "C09":
+          
+          return "组织机构代码证";
+      case "C35":
+          return "统一社会信用代码证";
+          
+      default:
+          return value
+  }
+}),
+
+
+//对发票进行转换
+Vue.filter('invoiceChange', (value) => {
+  switch (value) {
+    case "01":
+      return "专票";
+    case "02":
+      return "普票";
+    default:
+      return value
+  }
+
+}),
+//对币种进行转换
+Vue.filter('moneyDecode',(value)=>{
+  console.log(value);
+  switch(value)
+  {
+    case "10":
+      return "人民币";
+    case "19":
+      return "澳门元";
+    case "21":
+      return "港币";
+    case "27":
+      return "俄罗斯卢布";
+    case "31":
+      return "台湾元";
+    case "32":
+      return "美元";
+    case "35":
+      return "欧元";
+    case "39":
+      return "加拿大元";
+    case "43":
+      return "英镑";
+    case "65":
+      return "日元";
+    case "69":
+      return "新加坡元";
+    default:
+      return value
+  }
+})
+
+//导入角色
+import roles from './util/roles.js';
+Vue.roles = roles;
+//导入自定义指令
+import directives from './util/directives.js';
+Object.keys(directives).forEach((key,value)=>{
+  Vue.directive(key,directives[key])
+})
+
 //error code
 Vue.prototype.$chooseLang = chooseLang;
 // lodash

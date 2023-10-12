@@ -17,13 +17,117 @@
 import { post, get, patch, put, deleted } from "./http";
 import { reviseParam } from "./util";
 import qs from "qs";
-
+var HANDLE1 = null;
 var HANDLE = null;
+var ASL_UNIVERSAL = null;
 if (process.env.NODE_ENV === "development") {
   // HANDLE = 'http://117.50.178.228:8080/'
-  HANDLE = "/handle/";
+  HANDLE1 = "/api/";
+  HANDLE = "/api/asl/universal/handle/";
+  ASL_UNIVERSAL = "/request/asl/universal/";
 } else {
-  HANDLE = "";
+  //正式打包的服务器地址
+  var ip="http://101.43.251.145:8440/";
+  HANDLE1 =ip;
+  HANDLE = ip+'asl/universal/handle/';
+  ASL_UNIVERSAL=ip+"asl/universal/";
+  //本地服务器
+  // HANDLE = 'http://101.43.251.145:8440/asl/universal/handle/';
+  // ASL_UNIVERSAL = "http://101.43.251.145:8440/asl/universal/";
+
+}
+
+//login
+export function login(data, code, token) {
+  return post({
+    url: `${HANDLE1}login`,
+    // url: `${url.ORG_LIST}/account/login`,
+    method: 'post',
+    data: data,
+    headers: {
+      'Content-Type': "application/x-www-form-urlencoded",
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  })
+}
+
+
+
+//获取交易数量
+export function GetTransactionNum(data) {
+  return post({
+    url: `${HANDLE}`,
+    method: "post",
+    data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
+  });
+}
+
+
+/**入池信息 */
+export function EnterpoolDataInfos(data) {
+  return get({
+    url: `${ASL_UNIVERSAL}decryptEnterpoolDataInfos`,
+    method: "get",
+    params: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  });
+}
+
+/**融资意向 */
+export function FinancingIntentionInfo(data,list) {
+  return get({
+    url: `${ASL_UNIVERSAL}decryptFinancingIntention`,
+    method: "get",
+    params: data,
+    //headers: arguments[1] ? list:'',
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  });
+}
+
+
+/**汇款账户信息 */
+export function CollectionAccountInfo(data) {
+  return get({
+    url: `${ASL_UNIVERSAL}decryptCollectionAccount`,
+    method: "get",
+    params: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  });
+}
+
+
+
+/**发票信息 */
+export function InvoiceInformation(data) {
+  return get({
+    url: `${ASL_UNIVERSAL}decryptInvoiceInformation`,
+    method: "get",
+    params: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  });
+}
+
+/**历史交易信息 */
+export function historicaltransaction(data) {
+  return get({
+    url: `${ASL_UNIVERSAL}decryptHistoricaltransaction`,
+    method: "get",
+    params: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
+  });
 }
 
 //交易
@@ -32,6 +136,9 @@ export function queryHomeSearch(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
   });
 }
 
@@ -41,6 +148,9 @@ export function BlockByNumber(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 export function BlockByNumber2(data) {
@@ -48,6 +158,9 @@ export function BlockByNumber2(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 export function BlockByNumber3(data) {
@@ -55,6 +168,9 @@ export function BlockByNumber3(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 export function BlockByNumber4(data) {
@@ -62,6 +178,9 @@ export function BlockByNumber4(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 export function BlockByNumber5(data) {
@@ -69,6 +188,9 @@ export function BlockByNumber5(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 export function BlockByNumber6(data) {
@@ -76,6 +198,9 @@ export function BlockByNumber6(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 //区块数量
@@ -84,6 +209,9 @@ export function BlockNumber(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 //节点数量
@@ -92,6 +220,9 @@ export function NodeNumber(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 
@@ -101,6 +232,9 @@ export function DealNumber(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 
@@ -110,6 +244,9 @@ export function TxSizeNumber(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 
@@ -119,6 +256,9 @@ export function NodeList(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 
@@ -128,6 +268,9 @@ export function hashList(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 //获取区块
@@ -136,19 +279,12 @@ export function txInfo(data) {
     url: `${HANDLE}`,
     method: "post",
     data: data,
-  });
-}
-//login
-export function login(data) {
-  return post({
-    url: `${url.ORG_LIST}/account/login`,
-    method: "post",
-    data: qs.stringify(data),
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: localStorage.getItem("access_token") || "",
     },
   });
 }
+
 //out login
 export function loginOut() {
   return get({
@@ -478,6 +614,9 @@ export function queryGroup() {
   return get({
     url: `${HANDLE}1/web3/groupList`,
     method: "get",
+    headers: {
+      Authorization: localStorage.getItem("access_token") || ""
+    }
   });
 }
 //create privateKey
@@ -787,7 +926,7 @@ export function postPerformanceSwitch(data) {
     method: "post",
     data: data,
     headers: {
-      Authorization: "Token " + localStorage.getItem("token") || "",
+      Authorization:localStorage.getItem("access_token") || "",
     },
   });
 }
@@ -805,6 +944,9 @@ export function encryption() {
     url: `${HANDLE}encrypt`,
     method: "get",
     responseType: "text",
+    headers: {
+      Authorization: localStorage.getItem("access_token") || "",
+    },
   });
 }
 /*订阅事件*/

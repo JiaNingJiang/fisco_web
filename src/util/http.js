@@ -70,7 +70,7 @@ axiosIns.interceptors.request.use(
 // http response interceptor
 axiosIns.interceptors.response.use(
     response => {
-
+        
         var result = response.data.result||{}
 
         if(typeof result !== 'string'){
@@ -90,10 +90,22 @@ axiosIns.interceptors.response.use(
                 query: { redirect: router.currentRoute.fullPath }
             })
         }
+
+        // 返回状态码错误
+        if (response) {
+            switch (response.data.code) {
+                case "Error001":
+                    localStorage.clear(); 
+                    router.push('/login'); 
+                    
+            }
+        }
         // tryHideFullScreenLoading()
         return response;
     },
     error => {
+        console.debug("net interceptors error:")
+        console.log("net interceptors error:"+error)
         if (localStorage.getItem('lang') === "en") {
             error.data = 'Timeout'
         } else {

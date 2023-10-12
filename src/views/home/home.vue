@@ -1,6 +1,6 @@
 <template>
-  <div class="over-view-wrapper">
-    <div style="margin: 0 20px 20px 0">
+  <div class="over-view-wrapper qqqqq" v-autoTableHeight="180">
+    <div style="margin: 0 20px 20px 0" >
       <el-row class="module-box-shadow">
         <el-col :xs="12" :sm="12" :md="6" :lg="6" :xl="6">
           <div class="overview-number block-bg" @click="handleLink">
@@ -89,17 +89,17 @@
         </el-col> -->
       </el-row>
     </div>
-    <div class="module-wrapper-small" style="padding: 30px 31px 26px 32px">
+    <div class="module-wrapper-small" style="padding: 30px 31px 26px 32px" >
       <el-input
         :placeholder="$t('placeholder.globalSearch')"
         v-model.trim="keyword"
-        @keyup.enter.native="submit"
+        @keyup.enter.native="search"
       >
         <el-button
           slot="append"
           icon="el-icon-search"
           v-loading="searchLoading"
-          @click="submit"
+          @click="search"
         ></el-button>
       </el-input>
     </div>
@@ -204,16 +204,16 @@
         </el-table-column>
       </el-table>
     </div> -->
-    <div style="min-width: 540px; margin: 8px 8px 0px 9px">
-      <el-row :gutter="16">
+    <div style="min-width: 540px; margin: 8px 8px 0px 9px"  v-autoTableHeight="295">
+      <el-row :gutter="16" style="height: 100%;overflow-y: auto" >
         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <div class="overview-wrapper">
             <p>
-              <span class="overview-title">Block List</span>
+              <span class="overview-title">区块</span>
               <span
                 class="overview-more cursor-pointer"
                 @click="goRouter('blocks')"
-                >More</span
+                >更多</span
               >
             </p>
             <div class="overview-item-base" v-loading="loadingBlock">
@@ -233,16 +233,16 @@
                       >块高 {{ item.number }}</router-link
                     > -->
                     <div class="node-ip"  @click="link(item)">
-                      Block {{ item.number }}
+                      Block {{ item.number |blockNumber}}
                     </div>
 
                   </span>
-                  <span class="font-color-8798ad">{{ item.timestamp }}</span>
+                  <span class="font-color-8798ad">{{ item.timestamp |formateDate }}</span>
                 </div>
                 <div>
                   <div class="block-miner">
                     <span>Blocker</span>
-                    <p :title="`${item.transaction}`">{{ item.transaction }}</p>
+                    <p :title="`${item.sealer}`">{{ item | formateBlocker }}</p>
                   </div>
                   <!-- <div class="text-right">
                                         <span>{{item.transCount}}</span>
@@ -447,6 +447,32 @@ export default {
     };
   },
 
+  filters: {
+    // 格式化区块编号
+    blockNumber: (value) => {
+      return parseInt(value, 16);
+    },
+
+    // 格式化区块时间
+    formateDate: (value) => {
+      const time = Number(value);
+      var date = new Date(time);
+      var Y = date.getFullYear() + '-';
+      var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+      var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
+      var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+      var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+      var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
+
+      return Y + M + D + h + m + s;
+    },
+
+    // 格式化blocker(sealer)
+    formateBlocker: (item) => {
+      return item.sealerList[eval(item.sealer).toString(16)]
+    },
+  },
+
   mounted: async function () {
     const self = this;
 
@@ -481,25 +507,6 @@ export default {
           const aff = allList5.data.result;
           const agg = allList6.data.result;
           self.blockData = [arr, add, acc, aee, aff, agg];
-
-          for (var i = 0; i < self.blockData.length; i++) {
-            const time = Number(self.blockData[i].timestamp);
-            var date = new Date(time);
-            var Y = date.getFullYear() + '-';
-            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-            var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
-            var h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-            var m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-            var s = (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
-
-            self.blockData[i].timestamp = Y + M + D + h + m + s;
-
-          }
-          self.blockData = self.blockData.map((it) => ({
-            ...it,
-            number: parseInt(it.number, 16),
-            transaction: it.sealerList[eval(it.sealer).toString(16)],
-          }));
         })
       );
   },
@@ -523,7 +530,7 @@ export default {
       router.push({
         path: "/transactionInfo",
         query: {
-          list: val,
+          number: val.number,
         },
       });
     },
@@ -612,6 +619,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+        txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber(data);
     },
@@ -625,6 +633,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+         txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber2(data);
     },
@@ -638,6 +647,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+         txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber3(data);
     },
@@ -651,6 +661,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+         txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber4(data);
     },
@@ -664,6 +675,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+         txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber5(data);
     },
@@ -677,6 +689,7 @@ removeDuplicate(arr) {
         method: "getBlockByNumber",
         params: [1, sum, true],
         id: 1,
+         txPageId:"1",blockPageId:"1"
       };
       return BlockByNumber6(data);
     },
@@ -754,6 +767,31 @@ removeDuplicate(arr) {
         //   break;
       }
     },
+
+
+
+        // 搜索按钮逻辑
+        search() {
+
+            let searchKey = this.keyword
+            var arr = Number(searchKey).toString(16);
+            var sum = "0x" + arr;
+            var data = {
+                jsonrpc: "2.0",
+                method: "getBlockByNumber",
+                params: [1, sum, true],
+                id: 1,
+                txPageId:"1",
+                blockPageId:"1"
+            };
+
+            // 网络请求搜索数据
+            BlockByNumber(data).then((res) => {
+                // TODO 校验搜索框输入逻辑
+                this.blockData = []
+                this.blockData=[res.data.result]
+            })
+        },
   },
 };
 </script>

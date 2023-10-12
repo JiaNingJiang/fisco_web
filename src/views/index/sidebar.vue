@@ -28,7 +28,7 @@
             <div class="mini-sidebar-contract-icon" v-if="!menuShowC" style="padding-bottom:40px">
                 <i class="el-icon-caret-right font-color-aeb1b5" @click="hideMune(false)" style="font-size: 18px;"></i>
             </div>
-            <div class='sidebar-check-group' :style="{'padding-left': menuShowC ? '': '4px','font-size': menuShowC?'':'9px'}">
+            <!-- <div class='sidebar-check-group' :style="{'padding-left': menuShowC ? '': '4px','font-size': menuShowC?'':'9px'}">
                 <el-dropdown trigger="click" @command="changeGroup">
                     <span class="cursor-pointer" @click="groupVisible = !groupVisible">
                         {{groupName}}<i :class="[groupVisible?'el-icon-caret-top':'el-icon-caret-bottom']"></i>
@@ -37,7 +37,7 @@
                         <el-dropdown-item v-for=" item in groupList" :key="item.group" :command="item">{{item.groupName}}</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
-            </div>
+            </div> -->
 
             <el-menu default-active="999" router class="el-menu-vertical-demo" text-color="#9da2ab" active-text-color="#1f83e7" active-background-color="#20293c" background-color="#242e42" @select="select" :collapse="!menuShowC" @open="handleOpen" @close="handleClose">
                 <template v-for="(item,index) in routesListC" v-if="item.menuShow">
@@ -50,7 +50,7 @@
                         </template>
 
                         <el-menu-item v-for="term in item.children" :key="term.path" :index="term.path" v-if="term.menuShow" style="padding-left: 58px" :style="{
-                                    'color': term.path == activeRoute ? '#1f83e7':'',
+                                    'color': term.path == activeRoute ? '#1f83e7':'rgb(157, 162, 171)',
                                     'border-left':term.path == activeRoute ? '3px solid #1f83e7': '',
                                     'padding-left':term.path == activeRoute ? '55px': '58px',
                                     'background-color':term.path == activeRoute ? '#1e293e': '#242e42',}">
@@ -63,7 +63,9 @@
                         <i :class="item.iconCls"></i>
                         <span slot="title">{{item.children[0].name}}</span>
                     </el-menu-item>
+
                 </template>
+
             </el-menu>
         </div>
     </div>
@@ -116,6 +118,13 @@ export default {
                     case 'subscribeEvent':
                         item.name = this.$t('route.subscribeEvent')
                         break;
+                    case 'informationMgmt':
+                      item.name = this.$t('route.informationMgmt')
+                      break;
+                    case 'filesMgmt':
+                      item.name = this.$t('route.filesMgmt')
+                      break;
+
 
                 }
                 if (item.children) {
@@ -160,9 +169,30 @@ export default {
                             case 'onlineTools':
                                 it.name = this.$t('route.onlineTools')
                                 break;
+                            case 'blockInfo':
+                                it.name = this.$t('route.blockInfo')
+                                break;
                             case 'contractWarehouse':
                                 it.name = this.$t('route.contractWarehouse')
                                 break;
+                            case 'collectionAccountInfo':
+                              it.name = this.$t('route.collectionAccountInfo')
+                            break;
+                            case 'financingIntentionInfo':
+                              it.name = this.$t('route.financingIntentionInfo')
+                            break;
+                            case 'invoiceInfo':
+                              it.name = this.$t('route.invoiceInfo')
+                            break;
+                            case 'historyInfo':
+                              it.name = this.$t('route.historyInfo')
+                              break;
+                            case 'enterPoolInfo':
+                              it.name = this.$t('route.enterPoolInfo')
+                              break;
+                            case 'filesInfo':
+                              it.name = this.$t('route.filesInfo')
+                              break;
                         }
                     })
                 }
